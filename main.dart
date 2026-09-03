@@ -10,7 +10,7 @@ class MiniLibraryApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'مكتبة الشيخ',
+      title: 'مكتبة الشيخ أحمد الصعبي',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primaryColor: const Color(0xFF6B4226), // بني
@@ -33,10 +33,15 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('المكتبة الإلكترونية'),
+        title: const Text('مكتبة الشيخ أحمد الصعبي'),
+        centerTitle: true,
       ),
       body: const Center(
-        child: Text('أهلاً بك في المكتبة'),
+        child: Text(
+          'أهلاً بك في مكتبة الشيخ أحمد الصعبي',
+          textAlign: TextAlign.center,
+          style: TextStyle(fontSize: 18),
+        ),
       ),
     );
   }
