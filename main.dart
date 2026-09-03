@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'screens/login_screen.dart';
 
 void main() {
   runApp(const MiniLibraryApp());
@@ -21,7 +22,7 @@ class MiniLibraryApp extends StatelessWidget {
         fontFamily: 'Cairo',
         useMaterial3: true,
       ),
-      home: const HomeScreen(),
+      home: const LoginScreen(),
     );
   }
 }
