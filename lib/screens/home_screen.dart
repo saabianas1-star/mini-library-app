@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../models/book.dart';
+import 'add_book_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -65,13 +66,20 @@ class _HomeScreenState extends State<HomeScreen> {
                 );
               },
             ),
-      floatingActionButton: FloatingActionButton(
+        floatingActionButton: FloatingActionButton(
         backgroundColor: const Color(0xFF6B4226),
-        onPressed: () {
-          // لاحقاً رح نروح عالشاشة تبع إضافة كتاب
+        onPressed: () async {
+          final newBook = await Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const AddBookScreen()),
+          );
+          if (newBook != null) {
+            setState(() {
+              books.add(newBook);
+            });
+          }
         },
         child: const Icon(Icons.add, color: Colors.white),
-      ),
     );
   }
 }
