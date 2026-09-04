@@ -1,6 +1,8 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import '../models/book.dart';
 import 'add_book_screen.dart';
+import 'book_reader_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -10,7 +12,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  // قائمة كتب تجريبية مبدئياً (بعدين رح نخليها تتحمل من التخزين الفعلي)
   final List<Book> books = [];
 
   @override
@@ -39,34 +40,42 @@ class _HomeScreenState extends State<HomeScreen> {
               itemCount: books.length,
               itemBuilder: (context, index) {
                 final book = books[index];
-                return Card(
-                  clipBehavior: Clip.antiAlias,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      Expanded(
-                        child: Image.file(
-                          // مسار صورة الغلاف
-                          // (لاحقاً منربطها بمسار فعلي)
-                          File(book.coverPath),
-                          fit: BoxFit.cover,
-                        ),
+                return GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => BookReaderScreen(book: book),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(6),
-                        child: Text(
-                          book.title,
-                          textAlign: TextAlign.center,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
+                    );
+                  },
+                  child: Card(
+                    clipBehavior: Clip.antiAlias,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Expanded(
+                          child: Image.file(
+                            File(book.coverPath),
+                            fit: BoxFit.cover,
+                          ),
                         ),
-                      ),
-                    ],
+                        Padding(
+                          padding: const EdgeInsets.all(6),
+                          child: Text(
+                            book.title,
+                            textAlign: TextAlign.center,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 );
               },
             ),
-        floatingActionButton: FloatingActionButton(
+      floatingActionButton: FloatingActionButton(
         backgroundColor: const Color(0xFF6B4226),
         onPressed: () async {
           final newBook = await Navigator.push(
@@ -80,6 +89,7 @@ class _HomeScreenState extends State<HomeScreen> {
           }
         },
         child: const Icon(Icons.add, color: Colors.white),
+      ),
     );
   }
 }
