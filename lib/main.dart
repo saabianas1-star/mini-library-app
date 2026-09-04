@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'screens/login_screen.dart';
+import 'screens/welcome_screen.dart';
 
 void main() {
   runApp(const MiniLibraryApp());
@@ -22,28 +22,7 @@ class MiniLibraryApp extends StatelessWidget {
         fontFamily: 'Cairo',
         useMaterial3: true,
       ),
-      home: const LoginScreen(),
-    );
-  }
-}
-
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('مكتبة الشيخ أحمد الصعبي'),
-        centerTitle: true,
-      ),
-      body: const Center(
-        child: Text(
-          'أهلاً بك في مكتبة الشيخ أحمد الصعبي',
-          textAlign: TextAlign.center,
-          style: TextStyle(fontSize: 18),
-        ),
-      ),
+      home: const WelcomeScreen(),
     );
   }
 }
