@@ -20,15 +20,20 @@ jobs:
         with:
           channel: 'stable'
 
+      - name: Generate platform folders
+        run: flutter create . --platforms=android --project-name=mini_library_app --org=com.saabianas
+
+      - name: Set app name
+        run: sed -i 's/android:label="[^"]*"/android:label="مكتبة الشيخ أحمد الصعبي"/' android/app/src/main/AndroidManifest.xml
+
       - name: Get dependencies
         run: flutter pub get
 
       - name: Build APK
-        run: flutter build apk --debug --no-pub
+        run: flutter build apk --release
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: mini-library-app-apk
-          path: build/app/outputs/flutter-apk/app-debug.apk
-          
+          path: build/app/outputs/flutter-apk/app-release.apk
