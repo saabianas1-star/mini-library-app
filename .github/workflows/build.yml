@@ -22,11 +22,10 @@ jobs:
           channel: 'stable'
 
       - name: Generate platform folders
-        run: flutter create . --platforms=android
+        run: flutter create . --platforms=android --project-name=mini_library_app --org=com.saabianas
 
       - name: Set app name
-        run: |
-          sed -i 's/android:label="[^"]*"/android:label="مكتبة الشيخ أحمد الصعبي"/' android/app/src/main/AndroidManifest.xml
+        run: sed -i 's/android:label="[^"]*"/android:label="مكتبة الشيخ أحمد الصعبي"/' android/app/src/main/AndroidManifest.xml
 
       - name: Get dependencies
         run: flutter pub get
