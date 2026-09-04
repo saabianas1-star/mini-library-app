@@ -20,18 +20,11 @@ jobs:
         with:
           channel: 'stable'
 
-      - name: Re-create Android platform files
-        run: flutter create . --platforms=android
-
-      - name: Set App Name in Android
-        run: |
-          sed -i 's/android:label=".*"/android:label="مكتبة الشيخ أحمد الصعبي"/' android/app/src/main/AndroidManifest.xml
-
       - name: Get dependencies
         run: flutter pub get
 
       - name: Build APK
-        run: flutter build apk --debug
+        run: flutter build apk --debug --no-pub
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
