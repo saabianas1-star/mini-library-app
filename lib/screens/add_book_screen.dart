@@ -1,3 +1,5 @@
+import 'dart:io';
+import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
 import '../models/book.dart';
 
@@ -12,7 +14,17 @@ class _AddBookScreenState extends State<AddBookScreen> {
   final titleController = TextEditingController();
   final authorController = TextEditingController();
   final descController = TextEditingController();
+String? coverPath;
 
+Future<void> pickCover() async {
+  final picker = ImagePicker();
+  final picked = await picker.pickImage(source: ImageSource.gallery);
+  if (picked != null) {
+    setState(() {
+      coverPath = picked.path;
+    });
+  }
+}
   void save() {
     if (titleController.text.trim().isEmpty) return;
 
@@ -22,6 +34,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
       description: descController.text.trim(),
       price: 0,
       pdfPath: '',
+      coverPath: coverPath,
     );
 
     Navigator.pop(context, book);
@@ -36,6 +49,27 @@ class _AddBookScreenState extends State<AddBookScreen> {
         child: ListView(
           padding: const EdgeInsets.all(16),
           children: [
+            GestureDetector(
+  onTap: pickCover,
+  child: Container(
+    height: 180,
+    decoration: BoxDecoration(
+      color: const Color(0xFFF3E6CC),
+      border: Border.all(color: const Color(0xFFC9A24D)),
+      borderRadius: BorderRadius.circular(8),
+      image: coverPath != null
+          ? DecorationImage(
+              image: FileImage(File(coverPath!)),
+              fit: BoxFit.cover,
+            )
+          : null,
+    ),
+    child: coverPath == null
+        ? const Center(child: Text('اضغط لاختيار صورة الغلاف'))
+        : null,
+  ),
+),
+const SizedBox(height: 16),
             TextField(
               controller: titleController,
               decoration: const InputDecoration(labelText: 'اسم الكتاب'),
