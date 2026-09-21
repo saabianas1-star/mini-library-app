@@ -43,7 +43,17 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: const Color(0xFFC9A24D),
-        onPressed: () {},
+        onPressed: () async {
+  final newBook = await Navigator.push<Book>(
+    context,
+    MaterialPageRoute(builder: (context) => const AddBookScreen()),
+  );
+  if (newBook != null) {
+    setState(() {
+      books.add(newBook);
+    });
+  }
+},
         child: const Icon(Icons.add, color: Colors.white),
       ),
       body: Directionality(
