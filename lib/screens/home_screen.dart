@@ -1,26 +1,34 @@
 import 'package:flutter/material.dart';
+import '../models/book.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  final List<Book> books = [];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF2B1D14),
+      backgroundColor: const Color(0xFFF5EBDD),
       appBar: AppBar(
-        backgroundColor: const Color(0xFF3A2A1C),
-        title: const Text(
-          'الرئيسية',
-          style: TextStyle(color: Color(0xFFD4AF37)),
-        ),
+        title: const Text('مكتبة الشيخ أحمد الصعبي'),
         centerTitle: true,
+        backgroundColor: const Color(0xFFF5EBDD),
+        foregroundColor: const Color(0xFF4E342E),
+        elevation: 0,
       ),
       body: const Center(
-        child: Text(
-          'مرحبًا بك في المكتبة 📚\n(هاي الشاشة رح نبنيها لاحقًا)',
-          textAlign: TextAlign.center,
-          style: TextStyle(color: Colors.white70, fontSize: 16),
-        ),
+        child: Text('ما في كتب لسا'),
+      ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: const Color(0xFF8D6E3F),
+        onPressed: () {},
+        child: const Icon(Icons.add, color: Colors.white),
       ),
     );
   }
