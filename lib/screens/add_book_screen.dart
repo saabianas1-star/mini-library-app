@@ -16,6 +16,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
   final authorController = TextEditingController();
   final descController = TextEditingController();
 String? coverPath;
+  String? pdfPath;
 
 Future<void> pickCover() async {
   final picker = ImagePicker();
