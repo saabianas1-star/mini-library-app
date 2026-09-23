@@ -82,6 +82,22 @@ Future<void> pickCover() async {
         : null,
   ),
 ),
+            const SizedBox(height: 12),
+GestureDetector(
+  onTap: pickPdf,
+  child: Container(
+    height: 60,
+    alignment: Alignment.center,
+    decoration: BoxDecoration(
+      color: const Color(0xFFF3E6CC),
+      border: Border.all(color: const Color(0xFFC9A24D)),
+      borderRadius: BorderRadius.circular(8),
+    ),
+    child: Text(
+      pdfPath == null ? 'اضغط لاختيار ملف PDF' : 'تم اختيار الملف ✓',
+    ),
+  ),
+),
 const SizedBox(height: 16),
             TextField(
               controller: titleController,
