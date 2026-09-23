@@ -27,6 +27,17 @@ Future<void> pickCover() async {
     });
   }
 }
+  Future<void> pickPdf() async {
+  final result = await FilePicker.platform.pickFiles(
+    type: FileType.custom,
+    allowedExtensions: ['pdf'],
+  );
+  if (result != null && result.files.single.path != null) {
+    setState(() {
+      pdfPath = result.files.single.path;
+    });
+  }
+  }
   void save() {
     if (titleController.text.trim().isEmpty) return;
 
@@ -35,7 +46,7 @@ Future<void> pickCover() async {
       author: authorController.text.trim(),
       description: descController.text.trim(),
       price: 0,
-      pdfPath: '',
+      pdfPath: pdfPath ?? '',
       coverPath: coverPath,
     );
 
