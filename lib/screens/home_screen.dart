@@ -108,7 +108,7 @@ void deleteBook(int index) {
             children: List.generate(3, (i) {
               return Expanded(
                 child: i < shelfBooks.length
-                    ? _buildBookCard(shelfBooks[i])
+                    ? _buildBookCard(shelfBooks[i], index * 3 + i)
                     : const SizedBox(),
               );
             }),
@@ -137,16 +137,41 @@ void deleteBook(int index) {
     );
   }
 
-  Widget _buildBookCard(Book book) {
+  Widget _buildBookCard(Book book, int index) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8),
       child: Column(
-        children: [
-          Expanded(child: _buildCover(book)),
-          const SizedBox(height: 8),
-          _buildOpenButton(),
-          const SizedBox(height: 6),
-        ],
+      children: [
+  Expanded(child: _buildCover(book)),
+  const SizedBox(height: 8),
+  _buildOpenButton(),
+  const SizedBox(height: 6),
+  GestureDetector(
+    onTap: () {
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('حذف الكتاب'),
+          content: const Text('متأكد إنك بدك تحذف هذا الكتاب؟'),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text('إلغاء'),
+            ),
+            TextButton(
+              onPressed: () {
+                deleteBook(index);
+                Navigator.pop(context);
+              },
+              child: const Text('حذف', style: TextStyle(color: Colors.red)),
+            ),
+          ],
+        ),
+      );
+    },
+    child: const Icon(Icons.delete, color: Colors.red, size: 20),
+  ),
+],
       ),
     );
   }
