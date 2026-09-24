@@ -43,7 +43,12 @@ Future<void> loadBooks() async {
     });
   }
 }
-
+void deleteBook(int index) {
+  setState(() {
+    books.removeAt(index);
+  });
+  saveBooks();
+}
   int get shelfCount {
     final needed = (books.length / 3).ceil();
     return needed < 3 ? 3 : needed;
