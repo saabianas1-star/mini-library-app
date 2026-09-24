@@ -21,6 +21,23 @@ class _HomeScreenState extends State<HomeScreen> {
       pdfPath: '',
     ),
   ];
+  Future<void> saveBooks() async {
+  final prefs = await SharedPreferences.getInstance();
+  final jsonList = books.map((b) => jsonEncode(b.toMap())).toList();
+  await prefs.setStringList('books', jsonList);
+}
+
+Future<void> loadBooks() async {
+  final prefs = await SharedPreferences.getInstance();
+  final jsonList = prefs.getStringList('books');
+  if (jsonList != null) {
+    setState(() {
+      books.addAll(
+        jsonList.map((s) => Book.fromMap(jsonDecode(s))).toList(),
+      );
+    });
+  }
+}
 
   int get shelfCount {
     final needed = (books.length / 3).ceil();
