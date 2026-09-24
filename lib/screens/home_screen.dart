@@ -21,6 +21,11 @@ class _HomeScreenState extends State<HomeScreen> {
       pdfPath: '',
     ),
   ];
+  @override
+void initState() {
+  super.initState();
+  loadBooks();
+}
   Future<void> saveBooks() async {
   final prefs = await SharedPreferences.getInstance();
   final jsonList = books.map((b) => jsonEncode(b.toMap())).toList();
@@ -71,6 +76,7 @@ Future<void> loadBooks() async {
     setState(() {
       books.add(newBook);
     });
+    saveBooks();
   }
 },
         child: const Icon(Icons.add, color: Colors.white),
