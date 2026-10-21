@@ -34,7 +34,7 @@ class _BookReaderScreenState extends State<BookReaderScreen> {
           ? const Center(child: Text('لا يوجد ملف PDF لهذا الكتاب'))
           : SfPdfViewerTheme(
               data: SfPdfViewerThemeData(
-                brightness: isNightMode ? Brightness.dark : Brightness.light,
+              backgroundColor: isNightMode ? Colors.black : Colors.white,
               ),
               child: SfPdfViewer.file(File(widget.book.pdfPath)),
             ),
