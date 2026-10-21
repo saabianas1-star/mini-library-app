@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import '../models/book.dart';
 import 'add_book_screen.dart';
+import 'book_reader_screen.dart';
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -144,7 +145,7 @@ void deleteBook(int index) {
       children: [
   Expanded(child: _buildCover(book)),
   const SizedBox(height: 8),
-  _buildOpenButton(),
+  _buildOpenButton(book),
   const SizedBox(height: 6),
   GestureDetector(
     onTap: () {
@@ -210,12 +211,19 @@ void deleteBook(int index) {
     );
   }
 
-  Widget _buildOpenButton() {
+  Widget _buildOpenButton(Book book) {
     return SizedBox(
       width: double.infinity,
       height: 30,
       child: ElevatedButton(
-        onPressed: () {},
+        onPressed: () {
+  Navigator.push(
+    context,
+    MaterialPageRoute(
+      builder: (context) => BookReaderScreen(book: book),
+    ),
+  );
+},
         style: ElevatedButton.styleFrom(
           backgroundColor: const Color(0xFFF3E6CC),
           foregroundColor: const Color(0xFF4E2F1B),
