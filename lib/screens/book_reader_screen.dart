@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 import '../models/book.dart';
-
+import 'package:syncfusion_flutter_core/theme.dart';
 class BookReaderScreen extends StatefulWidget {
   final Book book;
   const BookReaderScreen({super.key, required this.book});
