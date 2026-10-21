@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 import '../models/book.dart';
 import 'package:syncfusion_flutter_core/theme.dart';
+
 class BookReaderScreen extends StatefulWidget {
   final Book book;
   const BookReaderScreen({super.key, required this.book});
@@ -31,12 +32,27 @@ class _BookReaderScreenState extends State<BookReaderScreen> {
         ],
       ),
       body: widget.book.pdfPath.isEmpty
-          ? const Center(child: Text('لا يوجد ملف PDF لهذا الكتاب'))
-          : SfPdfViewerTheme(
-              data: SfPdfViewerThemeData(
-              backgroundColor: isNightMode ? Colors.black : Colors.white,
+          ? const Center(child: Text('لهذا الكتاب لا يوجد ملف PDF'))
+          : ColorFiltered(
+              colorFilter: isNightMode
+                  ? const ColorFilter.matrix(<double>[
+                      -1, 0, 0, 0, 255,
+                      0, -1, 0, 0, 255,
+                      0, 0, -1, 0, 255,
+                      0, 0, 0, 1, 0,
+                    ])
+                  : const ColorFilter.mode(Colors.transparent, BlendMode.dst),
+              child: SfPdfViewerTheme(
+                data: SfPdfViewerThemeData(
+                  backgroundColor: Colors.white,
+                ),
+                child: SfPdfViewer.file(
+                  File(widget.book.pdfPath),
+                  scrollDirection: PdfScrollDirection.horizontal,
+                  pageLayoutMode: PdfPageLayoutMode.single,
+                  pageSpacing: 0,
+                ),
               ),
-              child: SfPdfViewer.file(File(widget.book.pdfPath)),
             ),
     );
   }
