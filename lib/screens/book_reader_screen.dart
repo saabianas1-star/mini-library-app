@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 import '../models/book.dart';
 import 'package:syncfusion_flutter_core/theme.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
 class BookReaderScreen extends StatefulWidget {
   final Book book;
   const BookReaderScreen({super.key, required this.book});
@@ -14,7 +14,23 @@ class BookReaderScreen extends StatefulWidget {
 
 class _BookReaderScreenState extends State<BookReaderScreen> {
   bool isNightMode = false;
+final PdfViewerController _pdfController = PdfViewerController();
+bool _restored = false;
 
+String get _pageKey => 'last_page_${widget.book.pdfPath}';
+
+Future<void> _restoreLastPage() async {
+  final prefs = await SharedPreferences.getInstance();
+  final page = prefs.getInt(_pageKey) ?? 1;
+  if (page > 1) _pdfController.jumpToPage(page);
+  _restored = true;
+}
+
+Future<void> _saveLastPage(int page) async {
+  if (!_restored) return;
+  final prefs = await SharedPreferences.getInstance();
+  await prefs.setInt(_pageKey, page);
+}
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,6 +67,13 @@ class _BookReaderScreenState extends State<BookReaderScreen> {
                   scrollDirection: PdfScrollDirection.horizontal,
                   pageLayoutMode: PdfPageLayoutMode.single,
                   pageSpacing: 0,
+                                controller: _pdfController,
+              onDocumentLoaded: (details) {
+                _restoreLastPage();
+              },
+              onPageChanged: (details) {
+                _saveLastPage(details.newPageNumber);
+              },
                 ),
               ),
             ),
