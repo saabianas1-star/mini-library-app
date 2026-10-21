@@ -3,6 +3,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
 import '../models/book.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:path_provider/path_provider.dart';
 
 class AddBookScreen extends StatefulWidget {
   const AddBookScreen({super.key});
@@ -28,15 +29,20 @@ Future<void> pickCover() async {
   }
 }
   Future<void> pickPdf() async {
-  final result = await FilePicker.platform.pickFiles(
-    type: FileType.custom,
-    allowedExtensions: ['pdf'],
-  );
-  if (result != null && result.files.single.path != null) {
-    setState(() {
-      pdfPath = result.files.single.path;
-    });
-  }
+    final result = await FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      allowedExtensions: ['pdf'],
+    );
+    if (result != null && result.files.single.path != null) {
+      final tempPath = result.files.single.path!;
+      final dir = await getApplicationDocumentsDirectory();
+      final newPath =
+          '${dir.path}/${DateTime.now().millisecondsSinceEpoch}.pdf';
+      await File(tempPath).copy(newPath);
+      setState(() {
+        pdfPath = newPath;
+      });
+    }
   }
   void save() {
     if (titleController.text.trim().isEmpty) return;
